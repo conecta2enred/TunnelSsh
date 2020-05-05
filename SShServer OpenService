@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#I use this example but we can decide the network tha we want to use, acording to the other scripts
+
+RedCliente="10.51.22.0/24"
+IpTunServer="192.168.250.1"
+IpTunCliente="192.168.250.2"
+
+
+#We up the tunnel interface
+
+ip link set tun0 up
+
+#We define the ip of the tunnel in the two sides and indicate the interface
+
+ip address add $IpTunServer peer $IpTunCliente dev tun0
+
+# We modificate the routing table to the other equip can use the tunnel
+
+ip route add $RedCliente via $IpTunCliente dev tun0
