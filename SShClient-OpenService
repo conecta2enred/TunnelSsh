@@ -1,0 +1,22 @@
+#!/bin/bash
+
+RedServer="10.50.22.0/24"
+IpTunServer="192.168.250.1"
+IpTunCliente="192.168.250.2"
+
+# First we connect to the Server to Open the tunnel and launch the server script
+
+ssh -w 0:0 -f -p 2222 -i /root/.ssh/id_ed25519 root@192.168.1.100 bash /usr/local/sbin/scripts/abrir_puente.sh
+
+# We create the tunnel-network interface
+
+ip link set tun0 up
+
+# We define the tunnel Ip in two sides and indicate the interface
+
+ip address add $IpTunCliente peer $IpTunServer dev tun0
+
+# We modificate the routing table to the other equip can use the tunnel
+
+ip route add $RedServer via $IpTunServer dev tun0
+
