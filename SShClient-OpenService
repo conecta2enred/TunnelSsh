@@ -8,11 +8,11 @@ IpTunCliente="192.168.250.2"
 
 ssh -w 0:0 -f -p 2222 -i /root/.ssh/id_ed25519 root@192.168.1.100 bash /usr/local/sbin/scripts/abrir_puente.sh
 
-# We create the tunnel-network interface
+# We up the tunnel interface
 
 ip link set tun0 up
 
-# We define the tunnel Ip in two sides and indicate the interface
+# We define the ip of the tunnel in the two sides and indicate the interface
 
 ip address add $IpTunCliente peer $IpTunServer dev tun0
 
