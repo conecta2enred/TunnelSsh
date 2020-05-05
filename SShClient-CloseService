@@ -1,0 +1,7 @@
+#In this Variable we take the ID SSH-Service
+
+id=$(ps -fe | grep "ssh -w 0:0 -f -p 2222" | grep -v "grep" | awk '{print$2}')
+
+#We Close the tunnel killing SSH-Service
+
+kill $id
